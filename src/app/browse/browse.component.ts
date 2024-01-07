@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-browse',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./browse.component.css']
 })
 export class BrowseComponent {
+  auth = inject(AuthService);
+  nameUser = JSON.parse(sessionStorage.getItem("loggedInUser")!).name;
+  emailUser = JSON.parse(sessionStorage.getItem("loggedInUser")!).email;
+  profileUserImg = JSON.parse(sessionStorage.getItem("loggedInUser")!).picture;
 
+  signOut() {
+    sessionStorage.removeItem("loggedInUser");
+    this.auth.singOut();
+  }
 }
